@@ -1,6 +1,7 @@
 //your variable declarations here
 Spaceship myShip;
 Star [] stars;
+ArrayList<Asteroid> asteroids;
 public void setup() 
 {
   //your code here
@@ -11,15 +12,39 @@ public void setup()
   for (int i = 0; i < stars.length; i++){
     stars[i] = new Star();
   }
+  
+  asteroids = new ArrayList<Asteroid>();
+  
+  //creating 10 asteroids
+  for(int i = 0; i < 10; i++){
+    asteroids.add(new Asteroid());
+  }
 }
 public void draw() 
 {
   //your code here
   background(0);
   
+  //stars
   for(int i = 0; i < stars.length; i++){
     stars[i].show();
   }
+  
+  //asteroids
+  for(int i = asteroids.size()-1; i >= 0; i-- ){
+    Asteroid a = asteroids.get(i);
+    
+    float distance = dist((float)myShip.myCenterX,(float)myShip.myCenterY, (float)a.getMyCenterX(), (float)a.getMyCenterY());
+    
+    if(distance < 20) {
+      asteroids.remove(i);
+    }
+    else {
+      a.show();
+      a.move();
+    }
+  }
+  
   
   myShip.show();
   myShip.move();
@@ -54,26 +79,3 @@ public void keyPressed() {
     myShip.myPointDirection = Math.random() * 360;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
